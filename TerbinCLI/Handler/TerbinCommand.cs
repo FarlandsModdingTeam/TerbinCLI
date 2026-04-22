@@ -20,17 +20,10 @@ public abstract class TerbinCommand
 
         foreach (var field in this.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
         {
-            if (field.GetCustomAttribute<OptionAttr>() is var att && att == null)
+            if (field.GetType().IsSubclassOf(typeof(Option)))
                 continue;
 
-            var name = att.Name;
-            var aliases = att.Alias ?? [];
-
-            var optionInstance = (Option)Activator.CreateInstance(field.FieldType, name, aliases)!;
-            optionInstance.Required = att.Required ?? false;
-            
-            field.SetValue(this, optionInstance);
-            command.Options.Add(optionInstance);
+            command.Options.Add((Option)field.GetValue(this)!);
         }
 
         command.SetAction(OnExecute);

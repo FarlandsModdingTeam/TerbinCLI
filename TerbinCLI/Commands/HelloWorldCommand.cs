@@ -5,11 +5,12 @@ using Pastel;
 public class HelloWorldCommand : TerbinCommand
 {
     public override string alias => "hello";
-
     public override string description => "Realiza un Hello World!";
 
-    [OptionAttr(Name = "--name" )]
-    private Option<string> NameOption = null!; 
+    private Option<string> NameOption = new Option<string>("--name")
+    {
+        Required = true,
+    };
 
     public override void OnExecute(ParseResult parseResult)
     {
