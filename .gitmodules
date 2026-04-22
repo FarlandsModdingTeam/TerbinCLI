@@ -1,0 +1,6 @@
+[submodule "TerbinProyect"]
+	path = TerbinProyect
+	url = git@github.com:FarlandsModdingTeam/TerbinProyect.git
+[submodule "Libs/TerbinProyect"]
+	path = Libs/TerbinProyect
+	url = git@github.com:FarlandsModdingTeam/TerbinProyect.git
