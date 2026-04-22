@@ -5,7 +5,7 @@ var rootCommand = new RootCommand("terbin-cli");
 
 Assembly.GetExecutingAssembly()
     .GetTypes()
-    .Where(t => t.IsSubclassOf(typeof(TerbinCommand)) && !t.IsAbstract)
+    .Where(t => t.IsSubclassOf(typeof(TerbinCommand)) && !t.IsAbstract && t.GetCustomAttribute<IgnoreRootCommand>() == null)
     .ToList()
     .ForEach(t =>
     {

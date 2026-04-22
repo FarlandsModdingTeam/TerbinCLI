@@ -11,7 +11,7 @@ public class HelloWorldCommand : TerbinCommand
     {
         Required = true,
     };
-
+    
     public override void OnExecute(ParseResult parseResult)
     {
         var name = parseResult.GetValue(NameOption);   
