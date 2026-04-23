@@ -2,6 +2,7 @@
 using System.Reflection;
 
 var rootCommand = new RootCommand("terbin-cli");
+rootCommand.SetAction(Debug.Help);
 
 Assembly.GetExecutingAssembly()
     .GetTypes()

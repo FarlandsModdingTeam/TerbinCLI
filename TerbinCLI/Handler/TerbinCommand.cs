@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.CommandLine.Help;
 using System.Reflection;
 
 [AttributeUsage(AttributeTargets.Class)]
@@ -16,7 +17,12 @@ public abstract class TerbinCommand
 
     public Command Build()
     {
-        var command = new Command(alias, description);
+        var helpOption = Debug.HelpOption;
+
+        var command = new Command(alias, description)
+        {
+            helpOption
+        };
 
         foreach (var field in this.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).OrderBy(f => f.Name))
         {
@@ -37,13 +43,18 @@ public abstract class TerbinCommand
             }
         }
 
-        command.SetAction(OnExecute);
+        command.SetAction(parseResult =>
+        {
+            if (parseResult.GetValue(helpOption))
+                Debug.Help(command);
+            else OnExecute(parseResult);
+        });
 
         return command;
     }
 
 
     public abstract void OnExecute(ParseResult parseResult);
-    
+
     public void Log(string text) => Debug.Log(this, text);
 }
